@@ -9,6 +9,23 @@ app.use(express.urlencoded({ extended: true }));
 // db connection
 db.connectDB();
 
+// to merge the file upload
+
+const fileUpload = require("express-fileupload");
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
+// cloduniary
+
+const cloudinary = require("./config/cloudniary");
+cloudinary.cloudinaryConnect();
+
+// mount the fileUploadation routte
+const upload = require("./routes/fileUpload");
+app.use("api/v1/upload", upload);
+
 // default route
 
 app.get("/", (req, res) => {
